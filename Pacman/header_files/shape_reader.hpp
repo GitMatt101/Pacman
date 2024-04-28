@@ -1,5 +1,5 @@
 #pragma once
-#include "geometry.h"
+#include "geometry.hpp"
 
 void create_shape_from_file(char* fileName, Shape* shape, Shape* d);
 

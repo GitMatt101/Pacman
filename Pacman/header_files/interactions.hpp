@@ -1,5 +1,5 @@
 #pragma once
-#include "entities.h"
+#include "entities.hpp"
 
 extern Player* player;
 extern vector<Entity*> walls;

@@ -131,20 +131,25 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header_files\shapes.h" />
-    <ClInclude Include="header_files\geometry.h" />
-    <ClInclude Include="header_files\hermite.h" />
-    <ClInclude Include="header_files\interactions.h" />
-    <ClInclude Include="header_files\scene_builder.h" />
-    <ClInclude Include="header_files\shader_maker.h" />
-    <ClInclude Include="header_files\shape_reader.h" />
-    <ClInclude Include="header_files\textCreator.h" />
-    <ClInclude Include="header_files\VAO_manager.h" />
-    <ClInclude Include="lib.h" />
+    <ClInclude Include="header_files\initializer.hpp" />
+    <ClInclude Include="header_files\scene_manager.hpp" />
+    <ClInclude Include="header_files\shapes.hpp" />
+    <ClInclude Include="header_files\geometry.hpp" />
+    <ClInclude Include="header_files\hermite.hpp" />
+    <ClInclude Include="header_files\interactions.hpp" />
+    <ClInclude Include="header_files\shaders.hpp" />
+    <ClInclude Include="header_files\shape_reader.hpp" />
+    <ClInclude Include="header_files\text_creator.hpp" />
+    <ClInclude Include="header_files\VAO_manager.hpp" />
+    <ClInclude Include="lib.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source_files\geometry.cpp" />
+    <ClCompile Include="source_files\hermite.cpp" />
+    <ClCompile Include="source_files\initializer.cpp" />
+    <ClCompile Include="source_files\scene_manager.cpp" />
+    <ClCompile Include="source_files\shaders.cpp" />
     <ClCompile Include="source_files\shapes.cpp" />
     <ClCompile Include="source_files\VAO_manager.cpp" />
   </ItemGroup>

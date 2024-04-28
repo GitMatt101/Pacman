@@ -1,5 +1,5 @@
 #pragma once
-#include "../lib.h"
+#include "../lib.hpp"
 
 struct Vertex {
 	vec3 coordinates;

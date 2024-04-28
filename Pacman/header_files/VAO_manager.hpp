@@ -1,5 +1,5 @@
 #pragma once
-#include "shapes.h"
+#include "shapes.hpp"
 
 void initShapeVAO(Shape* shape);
 

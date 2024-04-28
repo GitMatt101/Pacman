@@ -1,6 +1,6 @@
 #pragma once
-#include "../lib.h"
-#include "geometry.h"
+#include "../lib.hpp"
+#include "geometry.hpp"
 
 extern const int width;
 extern const int height;

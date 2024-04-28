@@ -1,4 +1,4 @@
-#include "../header_files/shaders.h"
+#include "../header_files/shaders.hpp"
 
 GLuint createProgram(char* vertexFile, char* fragmentFile) {
 	int success;

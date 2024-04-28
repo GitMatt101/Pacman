@@ -1,4 +1,4 @@
-#include "../header_files/VAO_manager.h"
+#include "../header_files/VAO_manager.hpp"
 
 void initShapeVAO(Shape* shape) {
 	glGenVertexArrays(1, shape->getVAO());

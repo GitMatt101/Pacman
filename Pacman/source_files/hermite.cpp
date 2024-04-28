@@ -1,4 +1,4 @@
-#include "../header_files/hermite.h"
+#include "../header_files/hermite.hpp"
 
 #define P_VAL 100
 

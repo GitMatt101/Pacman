@@ -1,6 +1,6 @@
 #pragma once
-#include "../lib.h"
-#include "geometry.h"
+#include "../lib.hpp"
+#include "geometry.hpp"
 
 #define PHI0(t)  (2.0f * pow(t, 3) - 3.0f * pow(t, 2) + 1.0f)
 #define PHI1(t)  (pow(t, 3) - 2.0f * pow(t, 2) + t)

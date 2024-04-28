@@ -18,34 +18,37 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lib.h">
+    <ClInclude Include="lib.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\shapes.h">
+    <ClInclude Include="header_files\shapes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\geometry.h">
+    <ClInclude Include="header_files\geometry.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\hermite.h">
+    <ClInclude Include="header_files\hermite.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\interactions.h">
+    <ClInclude Include="header_files\interactions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\scene_builder.h">
+    <ClInclude Include="header_files\shaders.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\shader_maker.h">
+    <ClInclude Include="header_files\shape_reader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\shape_reader.h">
+    <ClInclude Include="header_files\text_creator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\textCreator.h">
+    <ClInclude Include="header_files\VAO_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\VAO_manager.h">
+    <ClInclude Include="header_files\initializer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header_files\scene_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -60,6 +63,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source_files\geometry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source_files\shaders.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source_files\hermite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source_files\initializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source_files\scene_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

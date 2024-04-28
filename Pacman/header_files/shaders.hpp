@@ -1,5 +1,5 @@
 #pragma once
-#include "../lib.h"
+#include "../lib.hpp"
 
 GLuint createProgram(char* vertexFile, char *fragmentFile);
 
