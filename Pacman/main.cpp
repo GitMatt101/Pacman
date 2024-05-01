@@ -1,10 +1,8 @@
 #include "lib.hpp"
+#include "utils.hpp"
 #include "header_files/shapes.hpp"
 #include "header_files/initializer.hpp"
 #include "header_files/scene_manager.hpp"
-
-const int width = 800;
-const int height = 800;
 
 GLuint programID, programID_text;
 
@@ -23,7 +21,7 @@ int main(int argc, char* argv[]) {
 	glutInitContextProfile(GLUT_CORE_PROFILE);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(width, height);
-	glutInitWindowPosition(50, 50);
+	glutInitWindowPosition((screenWidth - width) / 2, (screenHeight - height) / 2 - 20);
 	glutCreateWindow("Pacman");
 	glutDisplayFunc(drawScene);
 	glewExperimental = GL_TRUE;

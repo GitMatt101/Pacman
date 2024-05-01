@@ -1,7 +1,7 @@
 #include "../header_files/shapes.hpp"
 #include "../header_files/VAO_manager.hpp"
 
-#define DEFAULT_SCALE 100.0f
+#define DEFAULT_SCALE 25.0f
 #define DEFAULT_LIVES 3
 
 /*
@@ -86,13 +86,17 @@ float Shape::getRotation() {
 }
 
 void Shape::move(float x, float y) {
-	this->x += x;
-	this->y += y;
+	if (x != NULL)
+		this->x += x;
+	if (y != NULL)
+		this->y += y;
 }
 
 void Shape::setScale(float x, float y) {
-	this->xScale = x;
-	this->yScale = y;
+	if (x != NULL)
+		this->xScale = x;
+	if (y != NULL)
+		this->yScale = y;
 }
 
 void Shape::setRotation(float rotation) {
@@ -101,8 +105,8 @@ void Shape::setRotation(float rotation) {
 
 pair<float, float> Shape::getSize() {
 	return {
-		abs(hitbox.cornerTop.x - hitbox.cornerBot.x),
-		abs(hitbox.cornerTop.y - hitbox.cornerBot.y)
+		abs(hitbox.cornerTop.x - hitbox.cornerBot.x) * xScale,
+		abs(hitbox.cornerTop.y - hitbox.cornerBot.y) * yScale
 	};
 }
 

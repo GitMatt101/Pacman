@@ -142,6 +142,7 @@
     <ClInclude Include="header_files\text_creator.hpp" />
     <ClInclude Include="header_files\VAO_manager.hpp" />
     <ClInclude Include="lib.hpp" />
+    <ClInclude Include="utils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

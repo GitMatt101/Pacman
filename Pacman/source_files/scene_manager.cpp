@@ -25,7 +25,7 @@ void drawScene() {
 		glUniformMatrix4fv(projectionUniform, 1, GL_FALSE, value_ptr(projectionMatrix));
 		glUniformMatrix4fv(modelUniform, 1, GL_FALSE, value_ptr(*shape->getModel()));
 		glBindVertexArray(*shape->getVAO());
-		glDrawArrays(GL_LINE_LOOP, 0, shape->getVertices()->size());
+		glDrawArrays(GL_TRIANGLE_FAN, 0, shape->getVertices()->size());
 		glBindVertexArray(0);
 	}
 	
