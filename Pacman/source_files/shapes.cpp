@@ -1,7 +1,7 @@
 #include "../header_files/shapes.hpp"
 #include "../header_files/VAO_manager.hpp"
 
-#define DEFAULT_SCALE 25.0f
+#define DEFAULT_SCALE 30.0f
 #define DEFAULT_LIVES 3
 
 /*

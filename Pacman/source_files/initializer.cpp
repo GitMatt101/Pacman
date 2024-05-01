@@ -74,44 +74,46 @@ void createLevel1() {
 	Shape* wall;
 
 	float levelHeight = height - scoreSpace;
+	float thickness = (new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f))))->getSize().second;
 
-	// Top wall
-	wall = new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-	wall->setScale((float)width, NULL);
-	wall->move((float)width / 2, (float)height - wall->getSize().second / 2);
-	walls.push_back(wall);
+	// Border walls
+	{
+		// Top
+		wall = new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale((float)width, NULL);
+		wall->move((float)width / 2, (float)height - wall->getSize().second / 2);
+		walls.push_back(wall);
 
-	// Bottom wall
-	wall = new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-	wall->setScale((float)width, NULL);
-	wall->move((float)width / 2, wall->getSize().second / 2 + scoreSpace);
-	walls.push_back(wall);
+		// Bottom
+		wall = new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale((float)width, NULL);
+		wall->move((float)width / 2, wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
 
-	// Top-Left wall
-	wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-	wall->setScale(NULL, levelHeight / 3);
-	wall->move(wall->getSize().first / 2, (float)height - wall->getSize().second / 2);
-	walls.push_back(wall);
-	// Top-Right wall
-	wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-	wall->setScale(NULL, levelHeight / 3);
-	wall->move((float)width - wall->getSize().first / 2, (float)height - wall->getSize().second / 2);
-	walls.push_back(wall);
+		// Top-Left
+		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale(NULL, levelHeight / 3);
+		wall->move(wall->getSize().first / 2, (float)height - wall->getSize().second / 2);
+		walls.push_back(wall);
+		// Top-Right
+		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale(NULL, levelHeight / 3);
+		wall->move((float)width - wall->getSize().first / 2, (float)height - wall->getSize().second / 2);
+		walls.push_back(wall);
 
-	// Bottom-Left wall
-	wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-	wall->setScale(NULL, levelHeight / 3);
-	wall->move(wall->getSize().first / 2, wall->getSize().second / 2 + scoreSpace);
-	walls.push_back(wall);
-	// Bottom-Right wall
-	wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-	wall->setScale(NULL, levelHeight / 3);
-	wall->move((float)width - wall->getSize().first / 2, wall->getSize().second / 2 + scoreSpace);
-	walls.push_back(wall);
+		// Bottom-Left
+		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale(NULL, levelHeight / 3);
+		wall->move(wall->getSize().first / 2, wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
+		// Bottom-Right
+		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale(NULL, levelHeight / 3);
+		wall->move((float)width - wall->getSize().first / 2, wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
+	}
 
-	// Values used to create the walls around the tunnels
 	float distance;	// Distance from the screen's border
-	float length;	// Additional length for some walls
 
 	// Left tunnel walls
 	{
@@ -136,15 +138,14 @@ void createLevel1() {
 		walls.push_back(wall);
 
 		distance = wall->getSize().first;
-		length = wall->getSize().second;
 
 		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-		wall->setScale(NULL, levelHeight / 9 + length);
+		wall->setScale(NULL, levelHeight / 9 + thickness);
 		wall->move(distance - wall->getSize().first / 2, levelHeight * 11 / 18 + wall->getSize().first / 2 + scoreSpace);
 		walls.push_back(wall);
 
 		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-		wall->setScale(NULL, levelHeight / 9 + length);
+		wall->setScale(NULL, levelHeight / 9 + thickness);
 		wall->move(distance - wall->getSize().first / 2, levelHeight * 7 / 18 - wall->getSize().first / 2 + scoreSpace);
 		walls.push_back(wall);
 	}
@@ -172,15 +173,14 @@ void createLevel1() {
 		walls.push_back(wall);
 
 		distance = wall->getSize().first;
-		length = wall->getSize().second;
 
 		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-		wall->setScale(NULL, levelHeight / 9 + length);
+		wall->setScale(NULL, levelHeight / 9 + thickness);
 		wall->move((float)width - distance + wall->getSize().first / 2, levelHeight * 11 / 18 + wall->getSize().first / 2 + scoreSpace);
 		walls.push_back(wall);
 
 		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-		wall->setScale(NULL, levelHeight / 9 + length);
+		wall->setScale(NULL, levelHeight / 9 + thickness);
 		wall->move((float)width - distance + wall->getSize().first / 2, levelHeight * 7 / 18 - wall->getSize().first / 2 + scoreSpace);
 		walls.push_back(wall);
 	}
@@ -197,43 +197,111 @@ void createLevel1() {
 		wall->move((float)width / 2, levelHeight * 4 / 9 - wall->getSize().second / 2 + scoreSpace);
 		walls.push_back(wall);
 
-		length = wall->getSize().second;
-
 		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-		wall->setScale(NULL, levelHeight / 9 + length);
+		wall->setScale(NULL, levelHeight / 9 + thickness);
 		wall->move((float)width / 2, levelHeight * 11 / 18 + wall->getSize().first / 2 + scoreSpace);
 		walls.push_back(wall);
 
 		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-		wall->setScale(NULL, levelHeight / 9 + length);
+		wall->setScale(NULL, levelHeight / 9 + thickness);
 		wall->move((float)width / 2, levelHeight * 7 / 18 - wall->getSize().first / 2 + scoreSpace);
+		walls.push_back(wall);
+	}
+
+	// Corner Ls
+	{
+		// Top-Left
+		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale(NULL, levelHeight * 2 / 9 + thickness);
+		wall->move((float)width * 3 / 10, levelHeight * 5 / 9 + wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
+		
+		wall = new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale((float)width / 5, NULL);
+		wall->move((float)width / 5 + thickness / 2, levelHeight * 7 / 9 + wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
+
+		// Top-Right
+		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale(NULL, levelHeight * 2 / 9 + thickness);
+		wall->move((float)width * 7 / 10, levelHeight * 5 / 9 + wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
+
+		wall = new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale((float)width / 5, NULL);
+		wall->move((float)width * 4 / 5 - thickness / 2, levelHeight * 7 / 9 + wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
+
+		// Bottom-Left
+		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale(NULL, levelHeight * 2 / 9 + thickness);
+		wall->move((float)width * 3 / 10, levelHeight * 2 / 9 - thickness + wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
+
+		wall = new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale((float)width / 5, NULL);
+		wall->move((float)width / 5 + thickness / 2, levelHeight * 2 / 9 - wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
+
+		// Bottom-Right divider
+		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale(NULL, levelHeight * 2 / 9 + thickness);
+		wall->move((float)width * 7 / 10, levelHeight * 2 / 9 - thickness + wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
+
+		wall = new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale((float)width / 5, NULL);
+		wall->move((float)width * 4 / 5 - thickness / 2, levelHeight * 2 / 9 - wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
+	}
+
+	// Cups
+	{
+		// Top cup
+		wall = new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale((float)width / 5, NULL);
+		wall->move((float)width / 2, levelHeight * 7 / 9 + wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
+
+		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale(NULL, levelHeight / 9 + thickness);
+		wall->move((float)width * 2 / 5 + thickness / 2, levelHeight * 13 / 18 + wall->getSize().first / 2 + scoreSpace);
+		walls.push_back(wall);
+
+		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale(NULL, levelHeight / 9 + thickness);
+		wall->move((float)width * 3 / 5 - thickness / 2, levelHeight * 13 / 18 + wall->getSize().first / 2 + scoreSpace);
+		walls.push_back(wall);
+
+		// Bottom cup
+		wall = new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale((float)width / 5, NULL);
+		wall->move((float)width / 2, levelHeight * 2 / 9 - wall->getSize().second / 2 + scoreSpace);
+		walls.push_back(wall);
+
+		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale(NULL, levelHeight / 9 + thickness);
+		wall->move((float)width * 2 / 5 + thickness / 2, levelHeight * 5 / 18 - wall->getSize().first / 2 + scoreSpace);
+		walls.push_back(wall);
+
+		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale(NULL, levelHeight / 9 + thickness);
+		wall->move((float)width * 3 / 5 - thickness / 2, levelHeight * 5 / 18 - wall->getSize().first / 2 + scoreSpace);
 		walls.push_back(wall);
 	}
 
 	// Dividers
 	{
-		// Top-Left divider
-		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-		wall->setScale(NULL, levelHeight * 2 / 9 + length);
-		wall->move((float)width * 3 / 10, levelHeight * 5 / 9 + wall->getSize().second / 2 + scoreSpace);
+		// Top
+		wall = new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale((float)width * 4 / 5 - thickness, NULL);
+		wall->move((float)width / 2, levelHeight * 8 / 9 + wall->getSize().second / 2 + scoreSpace);
 		walls.push_back(wall);
 
-		// Top-Right divider
-		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-		wall->setScale(NULL, levelHeight * 2 / 9 + length);
-		wall->move((float)width * 7 / 10, levelHeight * 5 / 9 + wall->getSize().second / 2 + scoreSpace);
-		walls.push_back(wall);
-
-		// Bottom-Left divider
-		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-		wall->setScale(NULL, levelHeight * 2 / 9 + length);
-		wall->move((float)width * 3 / 10, levelHeight * 2 / 9 - length + wall->getSize().second / 2 + scoreSpace);
-		walls.push_back(wall);
-
-		// Bottom-Right divider
-		wall = new Shape(createRectangle(0.5f, 1.0f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-		wall->setScale(NULL, levelHeight * 2 / 9 + length);
-		wall->move((float)width * 7 / 10, levelHeight * 2 / 9 - length + wall->getSize().second / 2 + scoreSpace);
+		// Bottom
+		wall = new Shape(createRectangle(1.0f, 0.5f, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+		wall->setScale((float)width * 4 / 5 - thickness, NULL);
+		wall->move((float)width / 2, levelHeight / 9 + wall->getSize().second / 2 + scoreSpace);
 		walls.push_back(wall);
 	}
 
