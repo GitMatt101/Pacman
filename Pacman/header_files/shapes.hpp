@@ -35,6 +35,7 @@ class Shape {
 		GLuint* getColorsVBO();
 		vector<Vertex>* getVertices();
 		mat4* getModel();
+		void setModel(mat4 model);
 		pair<float, float> getPosition();
 		pair<float, float> getScale();
 		float getRotation();

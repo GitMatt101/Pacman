@@ -1,7 +1,7 @@
 #include "../header_files/shapes.hpp"
 #include "../header_files/VAO_manager.hpp"
 
-#define DEFAULT_SCALE 25.0f
+#define DEFAULT_SCALE 100.0f
 #define DEFAULT_LIVES 3
 
 /*
@@ -64,6 +64,10 @@ vector<Vertex>* Shape::getVertices() {
 
 mat4* Shape::getModel() {
 	return &(this->model);
+}
+
+void Shape::setModel(mat4 model) {
+	this->model = model;
 }
 
 pair<float, float> Shape::getPosition() {

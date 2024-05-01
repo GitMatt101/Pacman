@@ -9,28 +9,42 @@
 #define VERTEX_FILE_TEXT "vertexShader_Text.glsl"
 #define FRAGMENT_FILE_TEXT "fragmentShader_Text.glsl"
 
+extern const int width;
+extern const int height;
+
 extern GLuint programID;
 extern GLuint programID_text;
 
 extern vector<Shape*> scene;
 extern map<int, vector<Shape*>> levels;
-extern Shape* player;
+extern Player* player;
+
+extern mat4 projectionMatrix;
+
+extern GLuint projectionUniform;
+extern GLuint modelUniform;
 
 void initShaders() {
-	char* vertexShader = (char*)VERTEX_FILE;
-	char* fragmentShader = (char*)FRAGMENT_FILE;
-	programID = createProgram(vertexShader, fragmentShader);
-	glUseProgram(programID);
+	programID = createProgram((char*)VERTEX_FILE, (char*)FRAGMENT_FILE);
+	programID_text = createProgram((char*)VERTEX_FILE_TEXT, (char*)FRAGMENT_FILE_TEXT);
 
-	vertexShader = (char*)VERTEX_FILE_TEXT;
-	fragmentShader = (char*)FRAGMENT_FILE_TEXT;
-	programID_text = createProgram(vertexShader, fragmentShader);
+	glUseProgram(programID);
+}
+
+void initUniforms() {
+	projectionMatrix = ortho(0.0f, float(width), 0.0f, float(height));
+
+	projectionUniform = glGetUniformLocation(programID, "Projection");
+	modelUniform = glGetUniformLocation(programID, "Model");
 }
 
 void initGame() {
-	vector<Vertex> playerVertices = createCircle(0.5f, 0.5f, 100, vec4(1.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
-	playerVertices.pop_back();
+	vector<Vertex> playerVertices = createCircle(0.5f, 0.5f, 180, vec4(1.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
+	for (int i = 0; i < 47; i++)
+		playerVertices.pop_back();
 	player = new Player(playerVertices);
+	player->move((float)width / 2, (float)height / 2);
+	player->setRotation(45.0f);
 
 	// TODO: create levels
 }

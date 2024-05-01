@@ -3,18 +3,19 @@
 #include "header_files/initializer.hpp"
 #include "header_files/scene_manager.hpp"
 
+const int width = 800;
+const int height = 800;
+
 GLuint programID, programID_text;
 
 vector<Shape*> scene;
 map<int, vector<Shape*>> levels;
-Shape* player;
+Player* player;
 
 mat4 projectionMatrix;
 
 GLuint projectionUniform;
 GLuint modelUniform;
-GLuint resolutionUniform;
-GLuint backgroundUniform;
 
 int main(int argc, char* argv[]) {
 	glutInit(&argc, argv);
@@ -28,13 +29,14 @@ int main(int argc, char* argv[]) {
 	glewExperimental = GL_TRUE;
 	glewInit();
 	initShaders();
+	initUniforms();
 	initGame();
 	initLevel(0);
 	//initTextVAO(&textVAO, &textVBO);
 	//initFreetype();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glutTimerFunc(17, update, 0);
+	glutTimerFunc(17, updateShapes, 0);
 	//glutKeyboardFunc(keyboard);
 	//glutPassiveMotionFunc(mouseMovement);
 	glutMainLoop();

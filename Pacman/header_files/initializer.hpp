@@ -5,6 +5,9 @@
 // Initializes the shaders to fill the background and calculate color interpolation.
 void initShaders();
 
+// Initializes the GL uniform variables.
+void initUniforms();
+
 // Initializes the game.
 void initGame();
 

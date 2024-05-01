@@ -1,8 +1,10 @@
 #include "../header_files/shaders.hpp"
+#include <iostream>
 
 GLuint createProgram(char* vertexFile, char* fragmentFile) {
 	int success;
 	char infoLog[512];
+	GLenum error = glGetError();
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -13,19 +15,24 @@ GLuint createProgram(char* vertexFile, char* fragmentFile) {
 
 	glGetShaderiv(vertexShaderId, GL_COMPILE_STATUS, &success);
 	if (!success)
+	{
 		glGetShaderInfoLog(vertexShaderId, 512, NULL, infoLog);
+		std::cout << "ERROR - FRAGMENT SHADER COMPILATION FAILED" << std::endl << infoLog << std::endl;
+	}
 
 	GLchar* fragmentShader = readShaderSource(fragmentFile);
 	GLuint fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShaderId, 1, (const char**)&fragmentShader, NULL);
 	glCompileShader(fragmentShaderId);
 
-
 	glGetShaderiv(fragmentShaderId, GL_COMPILE_STATUS, &success);
 	if (!success)
+	{
 		glGetShaderInfoLog(fragmentShaderId, 512, NULL, infoLog);
+		std::cout << "ERROR - FRAGMENT SHADER COMPILATION FAILED" << std::endl << infoLog << std::endl;
+	}
 
-	GLenum error = glGetError();
+	error = glGetError();
 	if (error != GL_NO_ERROR)
 	{
 		fprintf(
