@@ -1,8 +1,9 @@
 #pragma once
-const int screenWidth = 1920;
-const int screenHeight = 1080;
 
-const int width = 800;
-const int height = 900;
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
 
-const int scoreSpace = 50;
+#define WIDTH 800
+#define HEIGHT 900
+
+#define SCORE_SPACE 50

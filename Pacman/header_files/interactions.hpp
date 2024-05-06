@@ -1,17 +1,16 @@
 #pragma once
-#include "entities.hpp"
 
-extern Player* player;
-extern vector<Entity*> walls;
-extern vector<Entity*> enemies;
+/**
+* Checks user input and moves the player accordingly
+* 
+* @param key - The pressed key.
+* @param x - The cursor's x position when the key was pressed.
+* @param y - The cursor's y position when the key was pressed.
+*/
+void input(unsigned char key, int x, int y);
 
-extern const int width;
-extern const int height;
+// Checks if the player collided with a wall.
+bool checkWallCollision();
 
-void keyboard(unsigned char key, int x, int y);
-
-void mouseMovement(int x, int y);
-
-bool checkWallCollision(Entity* entity, float xShift, float yShift);
-
-bool checkEnemyCollision(Entity* entity);
+// Checks if the player collided with an enemy.
+bool checkEnemyCollision();
