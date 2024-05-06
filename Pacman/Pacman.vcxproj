@@ -131,6 +131,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="header_files\animations.hpp" />
     <ClInclude Include="header_files\initializer.hpp" />
     <ClInclude Include="header_files\scene_manager.hpp" />
     <ClInclude Include="header_files\shapes.hpp" />
@@ -146,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="source_files\animations.cpp" />
     <ClCompile Include="source_files\geometry.cpp" />
     <ClCompile Include="source_files\hermite.cpp" />
     <ClCompile Include="source_files\initializer.cpp" />

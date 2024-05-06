@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glutTimerFunc(17, updateShapes, 0);
+	glutTimerFunc(10, updateAnimations, 1);
 	//glutKeyboardFunc(keyboard);
 	//glutPassiveMotionFunc(mouseMovement);
 	glutMainLoop();

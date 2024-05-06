@@ -163,6 +163,7 @@ void Entity::die() {
 
 Player::Player(vector<Vertex> vertices) : Entity(vertices) {
 	this->lives = DEFAULT_LIVES;
+	this->mouthState = CLOSING;
 }
 
 int Player::getLives() {
@@ -173,4 +174,12 @@ void Player::hit() {
 	this->lives--;
 	if (this->lives == 0)
 		this->die();
+}
+
+MouthAnimationState Player::getMouthState() {
+	return this->mouthState;
+}
+
+void Player::setMouthState(MouthAnimationState state) {
+	this->mouthState = state;
 }

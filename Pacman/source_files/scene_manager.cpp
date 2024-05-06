@@ -1,5 +1,6 @@
 #include "../header_files/scene_manager.hpp"
 #include "../header_files/shapes.hpp"
+#include "../header_files/animations.hpp"
 
 extern GLuint programID;
 extern GLuint programID_text;
@@ -37,14 +38,37 @@ void updateShapes(int value) {
 	// TODO: check collision
 
 	if (player->isAlive()) {
-		// if enemies.size() > 0
 		for (Shape* shape : scene)
 			shape->updateVAO();
-		// else change level
 		glutPostRedisplay();
 		glutTimerFunc(17, updateShapes, 0);
 	} else {
 		// TODO: gameover
 	}
 
+}
+
+void updateAnimations(int value) {
+	switch (player->getMouthState()) {
+		case OPENING:
+			widenMouth();
+			if (player->getVertices()->size() >= 180 + 2)	//TODO: create definition in utils
+				player->setMouthState(CLOSING);
+			break;
+		case CLOSING:
+			closeMouth();
+			if (player->getVertices()->size() <= 135 + 2)	//TODO: create definition in utils
+				player->setMouthState(OPENING);
+			break;
+		default:
+			break;
+	}
+
+	glDeleteVertexArrays(1, player->getVAO());
+	glDeleteBuffers(1, player->getVerticesVBO());
+	glDeleteBuffers(1, player->getColorsVBO());
+	player->initVAO();
+	player->updateVAO();
+
+	glutTimerFunc(10, updateAnimations, 1);
 }

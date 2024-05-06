@@ -62,14 +62,19 @@ class Entity : public Shape {
 
 };
 
+enum MouthAnimationState { OPENING, CLOSING };
+
 class Player : public Entity {
 
 	private:
 		int lives;
+		MouthAnimationState mouthState;
 
 	public:
 		Player(vector<Vertex> vertices);
 		int getLives();
 		void hit();
+		MouthAnimationState getMouthState();
+		void setMouthState(MouthAnimationState state);
 
 };
