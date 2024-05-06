@@ -2,9 +2,6 @@
 #include "../lib.hpp"
 #include "geometry.hpp"
 
-extern const int width;
-extern const int height;
-
 struct Hitbox {
 	vec3 cornerBot;
 	vec3 cornerTop;
@@ -72,6 +69,7 @@ class Player : public Entity {
 
 	public:
 		Player(vector<Vertex> vertices);
+		void setRotation(float rotation);
 		int getLives();
 		void hit();
 		MouthAnimationState getMouthState();

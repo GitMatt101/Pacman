@@ -1,5 +1,6 @@
 #include "../header_files/shapes.hpp"
 #include "../header_files/VAO_manager.hpp"
+#include "../utils.hpp"
 
 #define DEFAULT_SCALE 25.0f
 #define DEFAULT_LIVES 3
@@ -115,10 +116,10 @@ Hitbox Shape::getHitbox() {
 }
 
 Hitbox Shape::getHitboxWorldCoordinates() {
-	float xBottom = (float)width / 2 + this->hitbox.cornerBot.x * this->xScale + this->x;
-	float yBottom = (float)height / 2 + this->hitbox.cornerBot.y * this->yScale + this->y;
-	float xTop = (float)width / 2 + this->hitbox.cornerTop.x * this->xScale + this->x;
-	float yTop = (float)height / 2 + this->hitbox.cornerTop.y * this->yScale + this->y;
+	float xBottom = (float)WIDTH / 2 + this->hitbox.cornerBot.x * this->xScale + this->x;
+	float yBottom = (float)HEIGHT / 2 + this->hitbox.cornerBot.y * this->yScale + this->y;
+	float xTop = (float)WIDTH / 2 + this->hitbox.cornerTop.x * this->xScale + this->x;
+	float yTop = (float)HEIGHT / 2 + this->hitbox.cornerTop.y * this->yScale + this->y;
 	return {
 		vec3(xBottom, yBottom, 0.0f),
 		vec3(xTop, yTop, 0.0f)
@@ -163,7 +164,17 @@ void Entity::die() {
 
 Player::Player(vector<Vertex> vertices) : Entity(vertices) {
 	this->lives = DEFAULT_LIVES;
+<<<<<<< HEAD
 	this->mouthState = CLOSING;
+=======
+	this->rotation = 45.0f;
+	this->x = (float)WIDTH / 2;
+	this->y = (float)(HEIGHT - SCORE_SPACE) / 2;
+}
+
+void Player::setRotation(float rotation) {
+	this->rotation = 45.0f + rotation;
+>>>>>>> main
 }
 
 int Player::getLives() {
