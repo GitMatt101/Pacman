@@ -1,6 +1,5 @@
 #include "../header_files/geometry.hpp"
-
-#define PI 3.14159265358979323846
+#include "../utils.hpp"
 
 vector<Vertex> createCircle(float rx, float ry, int precision, vec4 color1, vec4 color2) {
 	float step = 2 * PI / precision;

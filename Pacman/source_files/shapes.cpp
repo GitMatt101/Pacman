@@ -164,9 +164,10 @@ void Entity::die() {
 
 Player::Player(vector<Vertex> vertices) : Entity(vertices) {
 	this->lives = DEFAULT_LIVES;
+	this->mouthState = CLOSING;
 	this->rotation = 45.0f;
 	this->x = (float)WIDTH / 2;
-	this->y = (float)(HEIGHT - SCORE_SPACE) / 2;
+	this->y = (float)(HEIGHT + SCORE_SPACE) / 2;
 }
 
 void Player::setRotation(float rotation) {
@@ -181,4 +182,12 @@ void Player::hit() {
 	this->lives--;
 	if (this->lives == 0)
 		this->die();
+}
+
+MouthAnimationState Player::getMouthState() {
+	return this->mouthState;
+}
+
+void Player::setMouthState(MouthAnimationState state) {
+	this->mouthState = state;
 }

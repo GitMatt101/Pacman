@@ -10,3 +10,10 @@ void drawScene();
 * @param value - The callback id
 */
 void updateShapes(int value);
+
+/**
+* Updates the animations of the shapes.
+*
+* @param value - The callback id
+*/
+void updateAnimations(int value);
