@@ -14,6 +14,7 @@ extern GLuint programID;
 extern GLuint programID_text;
 
 extern vector<Shape*> scene;
+extern vector<Shape*> walls;
 extern map<int, vector<Shape*>> levels;
 extern Player* player;
 
@@ -68,7 +69,7 @@ void initLevel(int index) {
 }
 
 void createLevel1() {
-	vector<Shape*> walls;
+	walls.clear();
 	Shape* wall;
 
 	float levelHeight = HEIGHT - SCORE_SPACE;
