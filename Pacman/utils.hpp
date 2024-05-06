@@ -7,3 +7,9 @@
 #define HEIGHT 900
 
 #define SCORE_SPACE 50
+
+#define CIRCLE_PRECISION 180
+
+#define PI 3.14159265358979323846
+
+#define CIRCLE_RADIUS 1.0f

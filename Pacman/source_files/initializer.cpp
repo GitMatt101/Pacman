@@ -39,7 +39,7 @@ void initUniforms() {
 }
 
 void initGame() {
-	vector<Vertex> playerVertices = createCircle(1.0f, 1.0f, 180, vec4(1.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
+	vector<Vertex> playerVertices = createCircle(CIRCLE_RADIUS, CIRCLE_RADIUS, CIRCLE_PRECISION, vec4(1.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
 	for (int i = 0; i < 47; i++)
 		playerVertices.pop_back();
 	player = new Player(playerVertices);
