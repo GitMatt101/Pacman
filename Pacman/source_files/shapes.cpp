@@ -87,10 +87,8 @@ float Shape::getRotation() {
 }
 
 void Shape::move(float x, float y) {
-	if (x != NULL)
-		this->x += x;
-	if (y != NULL)
-		this->y += y;
+	this->x += x;
+	this->y += y;
 }
 
 void Shape::setScale(float x, float y) {

@@ -9,8 +9,13 @@
 */
 void input(unsigned char key, int x, int y);
 
-// Checks if the player collided with a wall.
-bool checkWallCollision();
+/**
+* Checks if the player collided with a wall.
+* 
+* @param x - Horizontal movement.
+* @param y - Vertical movement.
+*/
+bool checkWallCollision(float x, float y);
 
 // Checks if the player collided with an enemy.
 bool checkEnemyCollision();

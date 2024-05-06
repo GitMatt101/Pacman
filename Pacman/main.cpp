@@ -8,6 +8,7 @@
 GLuint programID, programID_text;
 
 vector<Shape*> scene;
+vector<Shape*> walls;
 map<int, vector<Shape*>> levels;
 Player* player;
 
