@@ -83,11 +83,7 @@
     <ClCompile Include="source_files\scene_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="source_files\animations.cpp">
-=======
     <ClCompile Include="source_files\interactions.cpp">
->>>>>>> main
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
