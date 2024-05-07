@@ -11,6 +11,7 @@ vector<Shape*> scene;
 vector<Shape*> walls;
 map<int, vector<Shape*>> levels;
 Player* player;
+vector<Entity*> enemies;
 
 mat4 projectionMatrix;
 

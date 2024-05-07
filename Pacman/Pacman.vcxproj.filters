@@ -86,5 +86,11 @@
     <ClCompile Include="source_files\interactions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source_files\animations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source_files\shape_reader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

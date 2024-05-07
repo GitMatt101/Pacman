@@ -1,6 +1,7 @@
 #include "../header_files/initializer.hpp"
 #include "../header_files/shapes.hpp"
 #include "../header_files/geometry.hpp"
+#include "../header_files/shape_reader.hpp"
 #include "../header_files/shaders.hpp"
 #include "../utils.hpp"
 
@@ -10,6 +11,8 @@
 #define VERTEX_FILE_TEXT "vertexShader_Text.glsl"
 #define FRAGMENT_FILE_TEXT "fragmentShader_Text.glsl"
 
+#define ENEMY_FILE "enemy.txt"
+
 extern GLuint programID;
 extern GLuint programID_text;
 
@@ -17,6 +20,7 @@ extern vector<Shape*> scene;
 extern vector<Shape*> walls;
 extern map<int, vector<Shape*>> levels;
 extern Player* player;
+extern vector<Entity*> enemies;
 
 extern mat4 projectionMatrix;
 
@@ -65,7 +69,10 @@ void initLevel(int index) {
 		scene.push_back(wall);
 	}
 
-	// TODO: add enemies
+	for (Entity* enemy : enemies) {
+		enemy->initVAO();
+		scene.push_back(enemy);
+	}
 }
 
 void createLevel1() {
@@ -305,6 +312,12 @@ void createLevel1() {
 	}
 
 	levels.insert({ 0, walls });
+
+	enemies.clear();
+
+	Entity* enemy = new Entity(createHermiteShapeFromFile((char*)ENEMY_FILE, vec4(1.0f, 0.0f, 0.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+	enemy->setPosition((float)WIDTH / 2, levelHeight / 3);
+	enemies.push_back(enemy);
 }
 
 void createLevel2() {
