@@ -316,7 +316,19 @@ void createLevel1() {
 	enemies.clear();
 
 	Entity* enemy = new Entity(createHermiteShapeFromFile((char*)ENEMY_FILE, vec4(1.0f, 0.0f, 0.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
-	enemy->setPosition((float)WIDTH / 2, levelHeight / 3);
+	enemy->setPosition((float)WIDTH / 15, levelHeight * 17 / 18 + SCORE_SPACE);
+	enemies.push_back(enemy);
+
+	enemy = new Entity(createHermiteShapeFromFile((char*)ENEMY_FILE, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+	enemy->setPosition((float)WIDTH * 14 / 15, levelHeight * 17 / 18 + SCORE_SPACE);
+	enemies.push_back(enemy);
+
+	enemy = new Entity(createHermiteShapeFromFile((char*)ENEMY_FILE, vec4(0.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+	enemy->setPosition((float)WIDTH / 15, levelHeight / 18 + SCORE_SPACE);
+	enemies.push_back(enemy);
+
+	enemy = new Entity(createHermiteShapeFromFile((char*)ENEMY_FILE, vec4(1.0f, 1.0f, 1.0f, 1.0f), vec4(1.0f, 0.0f, 1.0f, 1.0f)));
+	enemy->setPosition((float)WIDTH * 14 / 15, levelHeight / 18 + SCORE_SPACE);
 	enemies.push_back(enemy);
 }
 
