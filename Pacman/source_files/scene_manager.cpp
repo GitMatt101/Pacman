@@ -1,6 +1,10 @@
 #include "../header_files/scene_manager.hpp"
 #include "../header_files/shapes.hpp"
 #include "../header_files/animations.hpp"
+#include "../header_files/interactions.hpp"
+#include "../utils.hpp"
+
+#define DEFAULT_MOVEMENT 5.0f
 
 extern GLuint programID;
 extern GLuint programID_text;
@@ -12,6 +16,9 @@ extern mat4 projectionMatrix;
 
 extern GLuint projectionUniform;
 extern GLuint modelUniform;
+
+// Moves the player, following the direction he is currently facing.
+void movePlayer();
 
 void drawScene() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -38,6 +45,7 @@ void updateShapes(int value) {
 	// TODO: check collision
 
 	if (player->isAlive()) {
+		movePlayer();
 		for (Shape* shape : scene)
 			shape->updateVAO();
 		glutPostRedisplay();
@@ -46,6 +54,41 @@ void updateShapes(int value) {
 		// TODO: gameover
 	}
 
+}
+
+void movePlayer() {
+	switch (player->direction) {
+		case UP:	// UP
+			if (!checkWallCollision(0.0f, DEFAULT_MOVEMENT))
+				player->move(DEFAULT_MOVEMENT);
+			// If the player goes too far up he teleports to the bottom
+			if (player->getPosition().second > (float)HEIGHT)
+				player->setPosition(player->getPosition().first, SCORE_SPACE);
+			break;
+		case LEFT:	// LEFT
+			if (!checkWallCollision(-DEFAULT_MOVEMENT, 0.0f))
+				player->move(DEFAULT_MOVEMENT);
+			// If the player goes too far left he teleports to the right
+			if (player->getPosition().first < 0.0f)
+				player->setPosition((float)WIDTH, player->getPosition().second);
+			break;
+		case DOWN:	// DOWN
+			if (!checkWallCollision(0.0f, -DEFAULT_MOVEMENT))
+				player->move(DEFAULT_MOVEMENT);
+			// If the player goes too far down he teleports to the top
+			if (player->getPosition().second < (float)SCORE_SPACE)
+				player->setPosition(player->getPosition().first, (float)HEIGHT);
+			break;
+		case RIGHT:	// RIGHT
+			if (!checkWallCollision(DEFAULT_MOVEMENT, 0.0f))
+				player->move(DEFAULT_MOVEMENT);
+			// If the player goes too far right he teleports to the left
+			if (player->getPosition().first > (float)WIDTH)
+				player->setPosition(0.0f, player->getPosition().second);
+			break;
+		default:
+			break;
+	}
 }
 
 void updateAnimations(int value) {
