@@ -15,6 +15,8 @@ Shape::Shape(vector<Vertex> vertices) {
 	this->vertices = vertices;
 	this->x = 0.0f;
 	this->y = 0.0f;
+	this->initialX = NULL;
+	this->initialY = NULL;
 	this->xScale = DEFAULT_SCALE;
 	this->yScale = DEFAULT_SCALE;
 	this->rotation = 0;
@@ -76,7 +78,15 @@ pair<float, float> Shape::getPosition() {
 	return { this->x, this->y };
 }
 
+pair<float, float> Shape::getInitialPosition() {
+	return { this->initialX, this->initialY };
+}
+
 void Shape::setPosition(float x, float y) {
+	if (this->initialX == NULL && this->initialY == NULL) {
+		this->initialX = x;
+		this->initialY = y;
+	}
 	this->x = x;
 	this->y = y;
 }
@@ -192,8 +202,7 @@ Player::Player(vector<Vertex> vertices) : Entity(vertices) {
 	this->lives = DEFAULT_LIVES;
 	this->mouthState = CLOSING;
 	this->rotation = 45.0f;
-	this->x = (float)WIDTH / 2;
-	this->y = (float)(HEIGHT + SCORE_SPACE) / 2;
+	this->setPosition((float)WIDTH / 2, (float)(HEIGHT + SCORE_SPACE) / 2);
 }
 
 void Player::setRotation(float rotation) {

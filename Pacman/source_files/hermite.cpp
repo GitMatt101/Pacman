@@ -64,7 +64,7 @@ vector<Vertex> buildCurve(vector<vec3> controlPoints, vec4 color1, vec4 color2) 
 	vector<Vertex> vertices;
 	vertices.push_back({
 		vec3(0.0f, 0.0f, 0.0f),
-		color1
+		color2
 	});
 
 	for (float tg = 0.0f; tg <= 1.0f; tg += passotg)

@@ -19,6 +19,8 @@ class Shape {
 		float xScale;
 		float yScale;
 		float rotation;
+		float initialX;
+		float initialY;
 		Direction direction;
 		Hitbox hitbox;
 		GLuint VAO;
@@ -39,6 +41,7 @@ class Shape {
 		mat4* getModel();
 		void setModel(mat4 model);
 		pair<float, float> getPosition();
+		pair<float, float> getInitialPosition();
 		void setPosition(float x, float y);
 		void move(float movement);
 		pair<float, float> getScale();

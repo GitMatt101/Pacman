@@ -1,14 +1,18 @@
 #include "../header_files/initializer.hpp"
 #include "../header_files/shapes.hpp"
 #include "../header_files/geometry.hpp"
+#include "../header_files/shape_reader.hpp"
 #include "../header_files/shaders.hpp"
 #include "../utils.hpp"
+#include<ctime>
 
 #define VERTEX_FILE "vertexShader_M.glsl"
 #define FRAGMENT_FILE "fragmentShader_M.glsl"
 
 #define VERTEX_FILE_TEXT "vertexShader_Text.glsl"
 #define FRAGMENT_FILE_TEXT "fragmentShader_Text.glsl"
+
+#define ENEMY_FILE "enemy.txt"
 
 extern GLuint programID;
 extern GLuint programID_text;
@@ -17,13 +21,22 @@ extern vector<Shape*> scene;
 extern vector<Shape*> walls;
 extern map<int, vector<Shape*>> levels;
 extern Player* player;
+extern vector<Entity*> enemies;
 
 extern mat4 projectionMatrix;
 
 extern GLuint projectionUniform;
 extern GLuint modelUniform;
 
+// Creates the first level, positioning walls and enemies.
 void createLevel1();
+
+/**
+* Updates all enemies' direction to make their movement random.
+* 
+* @param value - The callback function id.
+*/
+void updateEnemiesDirection(int value);
 
 void initShaders() {
 	programID = createProgram((char*)VERTEX_FILE, (char*)FRAGMENT_FILE);
@@ -40,6 +53,7 @@ void initUniforms() {
 }
 
 void initGame() {
+	srand(time(NULL));
 	vector<Vertex> playerVertices = createCircle(CIRCLE_RADIUS, CIRCLE_RADIUS, CIRCLE_PRECISION, vec4(1.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
 	for (int i = 0; i < 47; i++)
 		playerVertices.pop_back();
@@ -55,6 +69,7 @@ void initLevel(int index) {
 		glDeleteVertexArrays(1, shape->getVAO());
 		glDeleteBuffers(1, shape->getVerticesVBO());
 		glDeleteBuffers(1, shape->getColorsVBO());
+		shape->setPosition(shape->getInitialPosition().first, shape->getInitialPosition().second);
 	}
 	scene.clear();
 
@@ -65,7 +80,18 @@ void initLevel(int index) {
 		scene.push_back(wall);
 	}
 
-	// TODO: add enemies
+	for (Entity* enemy : enemies) {
+		enemy->initVAO();
+		enemy->setDirection(static_cast<Direction>(rand() % 4));
+		scene.push_back(enemy);
+	}
+	glutTimerFunc(1000, updateEnemiesDirection, 2);
+}
+
+void updateEnemiesDirection(int value) {
+	for (Entity* enemy: enemies)
+		enemy->setDirection(static_cast<Direction>(rand() % 4));
+	glutTimerFunc(rand() % 1000, updateEnemiesDirection, 2);
 }
 
 void createLevel1() {
@@ -305,6 +331,24 @@ void createLevel1() {
 	}
 
 	levels.insert({ 0, walls });
+
+	enemies.clear();
+
+	Entity* enemy = new Entity(createHermiteShapeFromFile((char*)ENEMY_FILE, vec4(1.0f, 0.0f, 0.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+	enemy->setPosition((float)WIDTH / 15, levelHeight * 17 / 18 + SCORE_SPACE);
+	enemies.push_back(enemy);
+
+	enemy = new Entity(createHermiteShapeFromFile((char*)ENEMY_FILE, vec4(0.0f, 0.0f, 1.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+	enemy->setPosition((float)WIDTH * 14 / 15, levelHeight * 17 / 18 + SCORE_SPACE);
+	enemies.push_back(enemy);
+
+	enemy = new Entity(createHermiteShapeFromFile((char*)ENEMY_FILE, vec4(0.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+	enemy->setPosition((float)WIDTH / 15, levelHeight / 18 + SCORE_SPACE);
+	enemies.push_back(enemy);
+
+	enemy = new Entity(createHermiteShapeFromFile((char*)ENEMY_FILE, vec4(1.0f, 1.0f, 1.0f, 1.0f), vec4(1.0f, 0.0f, 1.0f, 1.0f)));
+	enemy->setPosition((float)WIDTH * 14 / 15, levelHeight / 18 + SCORE_SPACE);
+	enemies.push_back(enemy);
 }
 
 void createLevel2() {

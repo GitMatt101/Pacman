@@ -1,7 +1,7 @@
 #include "../header_files/scene_manager.hpp"
-#include "../header_files/shapes.hpp"
 #include "../header_files/animations.hpp"
 #include "../header_files/interactions.hpp"
+#include "../header_files/initializer.hpp"
 #include "../utils.hpp"
 
 #define DEFAULT_MOVEMENT 5.0f
@@ -11,14 +11,21 @@ extern GLuint programID_text;
 
 extern vector<Shape*> scene;
 extern Player* player;
+extern vector<Entity*> enemies;
 
 extern mat4 projectionMatrix;
 
 extern GLuint projectionUniform;
 extern GLuint modelUniform;
 
-// Moves the player, following the direction he is currently facing.
-void movePlayer();
+/**
+* Moves an entity, following the direction it is currently facing.
+* 
+* @param entity - The entity to be moved.
+*/ 
+void moveEntity(Entity* entity);
+// Checks if the player hit an enemy, if he did he loses one life and the level is reset.
+void checkPlayerHit();
 
 void drawScene() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -42,10 +49,10 @@ void drawScene() {
 }
 
 void updateShapes(int value) {
-	// TODO: check collision
-
 	if (player->isAlive()) {
-		movePlayer();
+		moveEntity(player);
+		for (Entity* enemy : enemies)
+			moveEntity(enemy);
 		for (Shape* shape : scene)
 			shape->updateVAO();
 		glutPostRedisplay();
@@ -56,39 +63,40 @@ void updateShapes(int value) {
 
 }
 
-void movePlayer() {
-	switch (player->direction) {
+void moveEntity(Entity* entity) {
+	switch (entity->direction) {
 		case UP:	// UP
-			if (!checkWallCollision(0.0f, DEFAULT_MOVEMENT))
-				player->move(DEFAULT_MOVEMENT);
-			// If the player goes too far up he teleports to the bottom
-			if (player->getPosition().second > (float)HEIGHT)
-				player->setPosition(player->getPosition().first, SCORE_SPACE);
+			if (!checkWallCollision(entity, 0.0f, DEFAULT_MOVEMENT))
+				entity->move(DEFAULT_MOVEMENT);
+			// If the entity goes too far up he teleports to the bottom
+			if (entity->getPosition().second > (float)HEIGHT)
+				entity->setPosition(entity->getPosition().first, SCORE_SPACE);
 			break;
 		case LEFT:	// LEFT
-			if (!checkWallCollision(-DEFAULT_MOVEMENT, 0.0f))
-				player->move(DEFAULT_MOVEMENT);
-			// If the player goes too far left he teleports to the right
-			if (player->getPosition().first < 0.0f)
-				player->setPosition((float)WIDTH, player->getPosition().second);
+			if (!checkWallCollision(entity, -DEFAULT_MOVEMENT, 0.0f))
+				entity->move(DEFAULT_MOVEMENT);
+			// If the entity goes too far left he teleports to the right
+			if (entity->getPosition().first < 0.0f)
+				entity->setPosition((float)WIDTH, entity->getPosition().second);
 			break;
 		case DOWN:	// DOWN
-			if (!checkWallCollision(0.0f, -DEFAULT_MOVEMENT))
-				player->move(DEFAULT_MOVEMENT);
-			// If the player goes too far down he teleports to the top
-			if (player->getPosition().second < (float)SCORE_SPACE)
-				player->setPosition(player->getPosition().first, (float)HEIGHT);
+			if (!checkWallCollision(entity, 0.0f, -DEFAULT_MOVEMENT))
+				entity->move(DEFAULT_MOVEMENT);
+			// If the entity goes too far down he teleports to the top
+			if (entity->getPosition().second < (float)SCORE_SPACE)
+				entity->setPosition(entity->getPosition().first, (float)HEIGHT);
 			break;
 		case RIGHT:	// RIGHT
-			if (!checkWallCollision(DEFAULT_MOVEMENT, 0.0f))
-				player->move(DEFAULT_MOVEMENT);
-			// If the player goes too far right he teleports to the left
-			if (player->getPosition().first > (float)WIDTH)
-				player->setPosition(0.0f, player->getPosition().second);
+			if (!checkWallCollision(entity, DEFAULT_MOVEMENT, 0.0f))
+				entity->move(DEFAULT_MOVEMENT);
+			// If the entity goes too far right he teleports to the left
+			if (entity->getPosition().first > (float)WIDTH)
+				entity->setPosition(0.0f, entity->getPosition().second);
 			break;
 		default:
 			break;
 	}
+	checkPlayerHit();
 }
 
 void updateAnimations(int value) {
@@ -114,4 +122,11 @@ void updateAnimations(int value) {
 	player->updateVAO();
 
 	glutTimerFunc(10, updateAnimations, 1);
+}
+
+void checkPlayerHit() {
+	if (checkEnemyCollision()) {
+		player->hit();
+		initLevel(0);
+	}
 }

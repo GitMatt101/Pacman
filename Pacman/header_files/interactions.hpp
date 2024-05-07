@@ -1,4 +1,5 @@
 #pragma once
+#include "shapes.hpp"
 
 /**
 * Checks user input and moves the player accordingly
@@ -15,7 +16,7 @@ void input(unsigned char key, int x, int y);
 * @param x - Horizontal movement.
 * @param y - Vertical movement.
 */
-bool checkWallCollision(float x, float y);
+bool checkWallCollision(Entity* entity, float x, float y);
 
 // Checks if the player collided with an enemy.
 bool checkEnemyCollision();
