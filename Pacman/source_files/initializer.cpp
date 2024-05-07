@@ -69,6 +69,7 @@ void initLevel(int index) {
 		glDeleteVertexArrays(1, shape->getVAO());
 		glDeleteBuffers(1, shape->getVerticesVBO());
 		glDeleteBuffers(1, shape->getColorsVBO());
+		shape->setPosition(shape->getInitialPosition().first, shape->getInitialPosition().second);
 	}
 	scene.clear();
 

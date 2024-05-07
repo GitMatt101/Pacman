@@ -1,6 +1,7 @@
 #include "../header_files/scene_manager.hpp"
 #include "../header_files/animations.hpp"
 #include "../header_files/interactions.hpp"
+#include "../header_files/initializer.hpp"
 #include "../utils.hpp"
 
 #define DEFAULT_MOVEMENT 5.0f
@@ -23,6 +24,8 @@ extern GLuint modelUniform;
 * @param entity - The entity to be moved.
 */ 
 void moveEntity(Entity* entity);
+// Checks if the player hit an enemy, if he did he loses one life and the level is reset.
+void checkPlayerHit();
 
 void drawScene() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -93,6 +96,7 @@ void moveEntity(Entity* entity) {
 		default:
 			break;
 	}
+	checkPlayerHit();
 }
 
 void updateAnimations(int value) {
@@ -118,4 +122,11 @@ void updateAnimations(int value) {
 	player->updateVAO();
 
 	glutTimerFunc(10, updateAnimations, 1);
+}
+
+void checkPlayerHit() {
+	if (checkEnemyCollision()) {
+		player->hit();
+		initLevel(0);
+	}
 }

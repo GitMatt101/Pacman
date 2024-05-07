@@ -3,6 +3,7 @@
 
 extern vector<Shape*> walls;
 extern Player* player;
+extern vector<Entity*> enemies;
 
 void input(unsigned char key, int x, int y) {
 	switch (key) {
@@ -39,5 +40,12 @@ bool checkWallCollision(Entity* entity, float x, float y) {
 }
 
 bool checkEnemyCollision() {
+	for (Entity* enemy : enemies) {
+		if (player->getHitboxWorldCoordinates().cornerBot.x <= enemy->getHitboxWorldCoordinates().cornerTop.x
+			&& player->getHitboxWorldCoordinates().cornerTop.x >= enemy->getHitboxWorldCoordinates().cornerBot.x
+			&& player->getHitboxWorldCoordinates().cornerBot.y <= enemy->getHitboxWorldCoordinates().cornerTop.y
+			&& player->getHitboxWorldCoordinates().cornerTop.y >= enemy->getHitboxWorldCoordinates().cornerBot.y)
+			return true;
+	}
 	return false;
 }
