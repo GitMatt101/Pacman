@@ -4,6 +4,7 @@
 #include "../header_files/shape_reader.hpp"
 #include "../header_files/shaders.hpp"
 #include "../utils.hpp"
+#include<ctime>
 
 #define VERTEX_FILE "vertexShader_M.glsl"
 #define FRAGMENT_FILE "fragmentShader_M.glsl"
@@ -44,6 +45,7 @@ void initUniforms() {
 }
 
 void initGame() {
+	srand(time(NULL));
 	vector<Vertex> playerVertices = createCircle(CIRCLE_RADIUS, CIRCLE_RADIUS, CIRCLE_PRECISION, vec4(1.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
 	for (int i = 0; i < 47; i++)
 		playerVertices.pop_back();
@@ -71,6 +73,7 @@ void initLevel(int index) {
 
 	for (Entity* enemy : enemies) {
 		enemy->initVAO();
+		enemy->setDirection(static_cast<Direction>(rand() % 4));
 		scene.push_back(enemy);
 	}
 }
