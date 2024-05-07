@@ -18,6 +18,7 @@ Shape::Shape(vector<Vertex> vertices) {
 	this->xScale = DEFAULT_SCALE;
 	this->yScale = DEFAULT_SCALE;
 	this->rotation = 0;
+	this->direction = NONE;
 	this->backgroundComponent = false;
 
 	float xMin = this->vertices[0].coordinates.x;
@@ -75,6 +76,11 @@ pair<float, float> Shape::getPosition() {
 	return { this->x, this->y };
 }
 
+void Shape::setPosition(float x, float y) {
+	this->x = x;
+	this->y = y;
+}
+
 pair<float, float> Shape::getScale() {
 	return {
 		this->xScale,
@@ -86,9 +92,31 @@ float Shape::getRotation() {
 	return this->rotation;
 }
 
-void Shape::move(float x, float y) {
-	this->x += x;
-	this->y += y;
+void Shape::move(float movement) {
+	switch (this->direction) {
+		case UP:
+			this->y += movement;
+			break;
+		case LEFT:
+			this->x -= movement;
+			break;
+		case DOWN:
+			this->y -= movement;
+			break;
+		case RIGHT:
+			this->x += movement;
+			break;
+		default:
+			break;
+	}
+}
+
+Direction Shape::getDirection() {
+	return this->direction;
+}
+
+void Shape::setDirection(Direction direction) {
+	this->direction = direction;
 }
 
 void Shape::setScale(float x, float y) {

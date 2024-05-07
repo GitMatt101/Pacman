@@ -7,6 +7,10 @@ struct Hitbox {
 	vec3 cornerTop;
 };
 
+enum Direction {
+	UP, LEFT, DOWN, RIGHT, NONE
+};
+
 class Shape {
 
 	public:
@@ -15,6 +19,7 @@ class Shape {
 		float xScale;
 		float yScale;
 		float rotation;
+		Direction direction;
 		Hitbox hitbox;
 		GLuint VAO;
 		GLuint VBO_V;
@@ -34,12 +39,15 @@ class Shape {
 		mat4* getModel();
 		void setModel(mat4 model);
 		pair<float, float> getPosition();
+		void setPosition(float x, float y);
+		void move(float movement);
 		pair<float, float> getScale();
-		float getRotation();
-		void move(float x, float y);
-		void setScale(float x, float y);
-		void setRotation(float rotation);
 		pair<float, float> getSize();
+		void setScale(float x, float y);
+		float getRotation();
+		void setRotation(float rotation);
+		Direction getDirection();
+		void setDirection(Direction direction);
 		Hitbox getHitbox();
 		Hitbox getHitboxWorldCoordinates();
 		bool isBackgroundComponent();
