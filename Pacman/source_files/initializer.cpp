@@ -28,7 +28,15 @@ extern mat4 projectionMatrix;
 extern GLuint projectionUniform;
 extern GLuint modelUniform;
 
+// Creates the first level, positioning walls and enemies.
 void createLevel1();
+
+/**
+* Updates all enemies' direction to make their movement random.
+* 
+* @param value - The callback function id.
+*/
+void updateEnemiesDirection(int value);
 
 void initShaders() {
 	programID = createProgram((char*)VERTEX_FILE, (char*)FRAGMENT_FILE);
@@ -76,6 +84,13 @@ void initLevel(int index) {
 		enemy->setDirection(static_cast<Direction>(rand() % 4));
 		scene.push_back(enemy);
 	}
+	glutTimerFunc(1000, updateEnemiesDirection, 2);
+}
+
+void updateEnemiesDirection(int value) {
+	for (Entity* enemy: enemies)
+		enemy->setDirection(static_cast<Direction>(rand() % 4));
+	glutTimerFunc(rand() % 1000, updateEnemiesDirection, 2);
 }
 
 void createLevel1() {
