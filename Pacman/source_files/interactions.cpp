@@ -39,13 +39,12 @@ bool checkWallCollision(Entity* entity, float x, float y) {
 	return false;
 }
 
-bool checkEnemyCollision() {
-	for (Entity* enemy : enemies) {
-		if (player->getHitboxWorldCoordinates().cornerBot.x <= enemy->getHitboxWorldCoordinates().cornerTop.x
-			&& player->getHitboxWorldCoordinates().cornerTop.x >= enemy->getHitboxWorldCoordinates().cornerBot.x
-			&& player->getHitboxWorldCoordinates().cornerBot.y <= enemy->getHitboxWorldCoordinates().cornerTop.y
-			&& player->getHitboxWorldCoordinates().cornerTop.y >= enemy->getHitboxWorldCoordinates().cornerBot.y)
-			return true;
-	}
-	return false;
+bool checkCollision(Entity* entity) {
+	if (player->getHitboxWorldCoordinates().cornerBot.x <= entity->getHitboxWorldCoordinates().cornerTop.x
+		&& player->getHitboxWorldCoordinates().cornerTop.x >= entity->getHitboxWorldCoordinates().cornerBot.x
+		&& player->getHitboxWorldCoordinates().cornerBot.y <= entity->getHitboxWorldCoordinates().cornerTop.y
+		&& player->getHitboxWorldCoordinates().cornerTop.y >= entity->getHitboxWorldCoordinates().cornerBot.y)
+		return true;
+	else
+		return false;
 }

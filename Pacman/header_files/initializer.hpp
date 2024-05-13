@@ -11,9 +11,5 @@ void initUniforms();
 // Initializes the game.
 void initGame();
 
-/**
-* Clears the scene, reloads the player and loads the new level.
-* 
-* @param index - The index of the level to be loaded.
-*/
-void initLevel(int index);
+// Clears the scene and reloads the player, the walls, the enemies and the power ups.
+void initLevel();

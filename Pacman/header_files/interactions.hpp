@@ -11,12 +11,19 @@
 void input(unsigned char key, int x, int y);
 
 /**
-* Checks if the player collided with a wall.
+* Checks if an entity collided with a wall.
 * 
+* @param entity - Entity to check collision with.
 * @param x - Horizontal movement.
 * @param y - Vertical movement.
+* @return true if the player collided with a wall, false otherwise
 */
 bool checkWallCollision(Entity* entity, float x, float y);
 
-// Checks if the player collided with an enemy.
-bool checkEnemyCollision();
+/**
+* Checks if the player collided with an entity.
+* 
+* @param etnity - Entity to check collision with.
+* @return true if the player collided with the entity, false otherwise.
+*/ 
+bool checkCollision(Entity* entity);
