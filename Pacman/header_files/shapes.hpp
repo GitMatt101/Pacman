@@ -77,6 +77,7 @@ class Player : public Entity {
 	private:
 		int lives;
 		MouthAnimationState mouthState;
+		bool powerState;
 
 	public:
 		Player(vector<Vertex> vertices);
@@ -85,5 +86,7 @@ class Player : public Entity {
 		void hit();
 		MouthAnimationState getMouthState();
 		void setMouthState(MouthAnimationState state);
+		bool isPoweredUp();
+		void setPowerState(bool state);
 
 };

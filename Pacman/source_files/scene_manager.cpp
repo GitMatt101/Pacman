@@ -6,12 +6,15 @@
 
 #define DEFAULT_MOVEMENT 5.0f
 
+#define POWERUP_COUNTDOWN 1500
+
 extern GLuint programID;
 extern GLuint programID_text;
 
 extern vector<Shape*> scene;
 extern Player* player;
 extern vector<Entity*> enemies;
+extern vector<Entity*> powerUps;
 
 extern mat4 projectionMatrix;
 
@@ -24,8 +27,23 @@ extern GLuint modelUniform;
 * @param entity - The entity to be moved.
 */ 
 void moveEntity(Entity* entity);
+
 // Checks if the player hit an enemy, if he did he loses one life and the level is reset.
 void checkPlayerHit();
+
+// Checks if the player ate a power.
+void checkPowerUpEaten();
+
+// Used to count down the power up duration.
+void powerUpCountdown(int);
+
+/**
+* Removes an entity from a vector.
+* 
+* @param entity - Entity to be removed.
+* @param vector - Vector to remove the entity from.
+*/
+void removeEntityFromVector(Entity* entity, vector<Entity*>* entityVector);
 
 void drawScene() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -48,11 +66,21 @@ void drawScene() {
 	glUseProgram(programID);
 }
 
-void updateShapes(int value) {
+void updateShapes(int) {
 	if (player->isAlive()) {
 		moveEntity(player);
-		for (Entity* enemy : enemies)
-			moveEntity(enemy);
+		for (Entity* enemy : enemies) {
+			if (enemy->isAlive())
+				moveEntity(enemy);
+			else
+				removeEntityFromVector(enemy, &enemies);
+		}
+		for (Entity* powerUp : powerUps) {
+			if (powerUp->isAlive())
+				moveEntity(powerUp);
+			else
+				removeEntityFromVector(powerUp, &powerUps);
+		}
 		for (Shape* shape : scene)
 			shape->updateVAO();
 		glutPostRedisplay();
@@ -60,7 +88,6 @@ void updateShapes(int value) {
 	} else {
 		// TODO: gameover
 	}
-
 }
 
 void moveEntity(Entity* entity) {
@@ -96,10 +123,11 @@ void moveEntity(Entity* entity) {
 		default:
 			break;
 	}
+	checkPowerUpEaten();
 	checkPlayerHit();
 }
 
-void updateAnimations(int value) {
+void updateAnimations(int) {
 	switch (player->getMouthState()) {
 		case OPENING:
 			widenMouth();
@@ -121,12 +149,52 @@ void updateAnimations(int value) {
 	player->initVAO();
 	player->updateVAO();
 
-	glutTimerFunc(10, updateAnimations, 1);
+	glutTimerFunc(10, updateAnimations, 0);
 }
 
 void checkPlayerHit() {
-	if (checkEnemyCollision()) {
-		player->hit();
-		initLevel(0);
+	for (Entity* enemy : enemies) {
+		if (checkCollision(enemy)) {
+			if (player->isPoweredUp()) {
+				enemy->die();
+			} else {
+				player->hit();
+				initLevel();
+			}
+		}
 	}
+}
+
+void checkPowerUpEaten() {
+	for (Entity* powerUp : powerUps) {
+		if (checkCollision(powerUp)) {
+			player->setPowerState(true);
+			powerUp->die();
+			glutTimerFunc(1, powerUpCountdown, 0);
+		}
+	}
+}
+
+void powerUpCountdown(int) {
+	static int elapsedTime = 0;
+	if (!player->isPoweredUp())
+		return;
+	if (elapsedTime >= POWERUP_COUNTDOWN) {
+		elapsedTime = 0;
+		player->setPowerState(false);
+	} else {
+		elapsedTime++;
+		glutTimerFunc(17, powerUpCountdown, 0);
+	}
+}
+
+void removeEntityFromVector(Entity* entity, vector<Entity*>* entityVector) {
+	vector<Entity*>::iterator vectorIndex = find(entityVector->begin(), entityVector->end(), entity);
+	vector<Shape*>::iterator sceneIndex = find(scene.begin(), scene.end(), entity);
+	entityVector->erase(vectorIndex);
+	scene.erase(sceneIndex);
+	glDeleteVertexArrays(1, entity->getVAO());
+	glDeleteBuffers(1, entity->getVerticesVBO());
+	glDeleteBuffers(1, entity->getColorsVBO());
+	delete(entity);
 }

@@ -201,6 +201,7 @@ void Entity::die() {
 Player::Player(vector<Vertex> vertices) : Entity(vertices) {
 	this->lives = DEFAULT_LIVES;
 	this->mouthState = CLOSING;
+	this->powerState = false;
 	this->rotation = 45.0f;
 	this->setPosition((float)WIDTH / 2, (float)(HEIGHT + SCORE_SPACE) / 2);
 }
@@ -225,4 +226,21 @@ MouthAnimationState Player::getMouthState() {
 
 void Player::setMouthState(MouthAnimationState state) {
 	this->mouthState = state;
+}
+
+bool Player::isPoweredUp() {
+	return this->powerState;
+}
+
+void Player::setPowerState(bool state) {
+	this->powerState = state;
+	vector<Vertex> newVertices;
+	for (Vertex vertex : this->vertices) {
+		vec4 color = powerState ? vec4(1.0f, 0.0f, 0.0f, 1.0f) : vec4(1.0f, 1.0f, 0.0f, 1.0f);
+		newVertices.push_back({
+			vertex.coordinates,
+			color
+		});
+	}
+	this->vertices = newVertices;
 }

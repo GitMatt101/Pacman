@@ -19,24 +19,20 @@ extern GLuint programID_text;
 
 extern vector<Shape*> scene;
 extern vector<Shape*> walls;
-extern map<int, vector<Shape*>> levels;
 extern Player* player;
 extern vector<Entity*> enemies;
+extern vector<Entity*> powerUps;
 
 extern mat4 projectionMatrix;
 
 extern GLuint projectionUniform;
 extern GLuint modelUniform;
 
-// Creates the first level, positioning walls and enemies.
-void createLevel1();
+// Creates the level, positioning walls and enemies.
+void createLevel();
 
-/**
-* Updates all enemies' direction to make their movement random.
-* 
-* @param value - The callback function id.
-*/
-void updateEnemiesDirection(int value);
+// Updates all enemies' direction to make their movement random.
+void updateEnemiesDirection(int);
 
 void initShaders() {
 	programID = createProgram((char*)VERTEX_FILE, (char*)FRAGMENT_FILE);
@@ -58,12 +54,11 @@ void initGame() {
 	for (int i = 0; i < 47; i++)
 		playerVertices.pop_back();
 	player = new Player(playerVertices);
-
-	// TODO: create levels
-	createLevel1();
+	createLevel();
 }
 
-void initLevel(int index) {
+void initLevel() {
+	createLevel();
 	// Unsets all VAOs and VBOs
 	for (Shape* shape : scene) {
 		glDeleteVertexArrays(1, shape->getVAO());
@@ -75,7 +70,7 @@ void initLevel(int index) {
 
 	player->initVAO();
 	scene.push_back(player);
-	for (Shape* wall : levels[index]) {
+	for (Shape* wall : walls) {
 		wall->initVAO();
 		scene.push_back(wall);
 	}
@@ -85,16 +80,21 @@ void initLevel(int index) {
 		enemy->setDirection(static_cast<Direction>(rand() % 4));
 		scene.push_back(enemy);
 	}
-	glutTimerFunc(1000, updateEnemiesDirection, 2);
+	glutTimerFunc(500, updateEnemiesDirection, 2);
+
+	for (Entity* powerUp : powerUps) {
+		powerUp->initVAO();
+		scene.push_back(powerUp);
+	}
 }
 
-void updateEnemiesDirection(int value) {
+void updateEnemiesDirection(int) {
 	for (Entity* enemy: enemies)
 		enemy->setDirection(static_cast<Direction>(rand() % 4));
-	glutTimerFunc(rand() % 1000, updateEnemiesDirection, 2);
+	glutTimerFunc(rand() % 1500, updateEnemiesDirection, 2);
 }
 
-void createLevel1() {
+void createLevel() {
 	walls.clear();
 	Shape* wall;
 
@@ -330,10 +330,9 @@ void createLevel1() {
 		walls.push_back(wall);
 	}
 
-	levels.insert({ 0, walls });
+
 
 	enemies.clear();
-
 	Entity* enemy = new Entity(createHermiteShapeFromFile((char*)ENEMY_FILE, vec4(1.0f, 0.0f, 0.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f)));
 	enemy->setPosition((float)WIDTH / 15, levelHeight * 17 / 18 + SCORE_SPACE);
 	enemies.push_back(enemy);
@@ -349,20 +348,23 @@ void createLevel1() {
 	enemy = new Entity(createHermiteShapeFromFile((char*)ENEMY_FILE, vec4(1.0f, 1.0f, 1.0f, 1.0f), vec4(1.0f, 0.0f, 1.0f, 1.0f)));
 	enemy->setPosition((float)WIDTH * 14 / 15, levelHeight / 18 + SCORE_SPACE);
 	enemies.push_back(enemy);
-}
 
-void createLevel2() {
 
-}
 
-void createLevel3() {
+	powerUps.clear();
+	Entity* powerUp = new Entity(createAstroid(1.0f, 1.0f, 180, vec4(1.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+	powerUp->setPosition((float)WIDTH / 2, levelHeight * 13 / 18 + SCORE_SPACE);
+	powerUps.push_back(powerUp);
 
-}
+	powerUp = new Entity(createAstroid(1.0f, 1.0f, 180, vec4(1.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+	powerUp->setPosition((float)WIDTH / 2, levelHeight * 17 / 18 + SCORE_SPACE);
+	powerUps.push_back(powerUp);
 
-void createLevel4() {
+	powerUp = new Entity(createAstroid(1.0f, 1.0f, 180, vec4(1.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+	powerUp->setPosition((float)WIDTH / 2, levelHeight * 5 / 18 + SCORE_SPACE);
+	powerUps.push_back(powerUp);
 
-}
-
-void createLevel5() {
-
+	powerUp = new Entity(createAstroid(1.0f, 1.0f, 180, vec4(1.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+	powerUp->setPosition((float)WIDTH / 2, levelHeight / 18 + SCORE_SPACE);
+	powerUps.push_back(powerUp);
 }

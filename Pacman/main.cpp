@@ -9,9 +9,9 @@ GLuint programID, programID_text;
 
 vector<Shape*> scene;
 vector<Shape*> walls;
-map<int, vector<Shape*>> levels;
 Player* player;
 vector<Entity*> enemies;
+vector<Entity*> powerUps;
 
 mat4 projectionMatrix;
 
@@ -32,15 +32,13 @@ int main(int argc, char* argv[]) {
 	initShaders();
 	initUniforms();
 	initGame();
-	initLevel(0);
+	initLevel();
 	//initTextVAO(&textVAO, &textVBO);
 	//initFreetype();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glutTimerFunc(17, updateShapes, 0);
-	glutTimerFunc(10, updateAnimations, 1);
-	//glutKeyboardFunc(keyboard);
-	//glutPassiveMotionFunc(mouseMovement);
+	glutTimerFunc(10, updateAnimations, 0);
 	glutKeyboardFunc(input);
 	glutMainLoop();
 }
