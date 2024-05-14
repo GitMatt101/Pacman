@@ -39,7 +39,7 @@
     <ClInclude Include="header_files\shape_reader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header_files\text_creator.hpp">
+    <ClInclude Include="header_files\text_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header_files\VAO_manager.hpp">
@@ -90,6 +90,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source_files\shape_reader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source_files\text_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

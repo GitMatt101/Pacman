@@ -140,7 +140,7 @@
     <ClInclude Include="header_files\interactions.hpp" />
     <ClInclude Include="header_files\shaders.hpp" />
     <ClInclude Include="header_files\shape_reader.hpp" />
-    <ClInclude Include="header_files\text_creator.hpp" />
+    <ClInclude Include="header_files\text_manager.hpp" />
     <ClInclude Include="header_files\VAO_manager.hpp" />
     <ClInclude Include="lib.hpp" />
     <ClInclude Include="utils.hpp" />
@@ -156,6 +156,7 @@
     <ClCompile Include="source_files\shaders.cpp" />
     <ClCompile Include="source_files\shapes.cpp" />
     <ClCompile Include="source_files\shape_reader.cpp" />
+    <ClCompile Include="source_files\text_manager.cpp" />
     <ClCompile Include="source_files\VAO_manager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
