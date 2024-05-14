@@ -19,6 +19,7 @@ extern GLuint programID_text;
 
 extern vector<Shape*> scene;
 extern vector<Shape*> walls;
+extern vector<Shape*> lives;
 extern Player* player;
 extern vector<Entity*> enemies;
 extern vector<Entity*> powerUps;
@@ -54,7 +55,19 @@ void initGame() {
 	for (int i = 0; i < 47; i++)
 		playerVertices.pop_back();
 	player = new Player(playerVertices);
-	createLevel();
+
+	Shape* heart = new Shape(createHeart(0.05f, 0.05f, CIRCLE_PRECISION, vec4(1.0f, 0.0f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+	heart->setPosition((float)WIDTH - heart->getSize().first / 2 - 5.0f, heart->getSize().second / 2 + 10.0f);
+	lives.push_back(heart);
+	heart = new Shape(createHeart(0.05f, 0.05f, CIRCLE_PRECISION, vec4(1.0f, 0.0f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+	heart->setPosition((float)WIDTH - heart->getSize().first * 3 / 2 - 10.0f, heart->getSize().second / 2 + 10.0f);
+	lives.push_back(heart);
+	heart = new Shape(createHeart(0.05f, 0.05f, CIRCLE_PRECISION, vec4(1.0f, 0.0f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+	heart->setPosition((float)WIDTH - heart->getSize().first * 5 / 2 - 15.0f, heart->getSize().second / 2 + 10.0f);
+	lives.push_back(heart);
+
+	for (Shape* life : lives)
+		scene.push_back(life);
 }
 
 void initLevel() {
@@ -85,6 +98,11 @@ void initLevel() {
 	for (Entity* powerUp : powerUps) {
 		powerUp->initVAO();
 		scene.push_back(powerUp);
+	}
+
+	for (Shape* life : lives) {
+		life->initVAO();
+		scene.push_back(life);
 	}
 }
 

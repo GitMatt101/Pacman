@@ -2,6 +2,7 @@
 #include "../header_files/animations.hpp"
 #include "../header_files/interactions.hpp"
 #include "../header_files/initializer.hpp"
+#include "../header_files/text_manager.hpp"
 #include "../utils.hpp"
 
 #define DEFAULT_MOVEMENT 5.0f
@@ -15,11 +16,14 @@ extern vector<Shape*> scene;
 extern Player* player;
 extern vector<Entity*> enemies;
 extern vector<Entity*> powerUps;
+extern vector<Shape*> lives;
 
 extern mat4 projectionMatrix;
 
 extern GLuint projectionUniform;
 extern GLuint modelUniform;
+
+extern TextManager* textManager;
 
 /**
 * Moves an entity, following the direction it is currently facing.
@@ -45,6 +49,9 @@ void powerUpCountdown(int);
 */
 void removeEntityFromVector(Entity* entity, vector<Entity*>* entityVector);
 
+// Lose a life, removing it from the scene.
+void loseLife();
+
 void drawScene() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -61,7 +68,8 @@ void drawScene() {
 		glDrawArrays(GL_TRIANGLE_FAN, 0, shape->getVertices()->size());
 		glBindVertexArray(0);
 	}
-	
+	if (!player->isAlive())
+		textManager->renderText(projectionMatrix, "GAME OVER", (float)WIDTH / 2 - 145.0f, (float)HEIGHT / 2, 1.0f, vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	glutSwapBuffers();
 	glUseProgram(programID);
 }
@@ -85,8 +93,6 @@ void updateShapes(int) {
 			shape->updateVAO();
 		glutPostRedisplay();
 		glutTimerFunc(17, updateShapes, 0);
-	} else {
-		// TODO: gameover
 	}
 }
 
@@ -153,13 +159,17 @@ void updateAnimations(int) {
 }
 
 void checkPlayerHit() {
+	if (!player->isAlive())
+		return;
 	for (Entity* enemy : enemies) {
 		if (checkCollision(enemy)) {
 			if (player->isPoweredUp()) {
 				enemy->die();
 			} else {
 				player->hit();
-				initLevel();
+				loseLife();
+				if (player->isAlive())
+					initLevel();
 			}
 		}
 	}
@@ -186,6 +196,17 @@ void powerUpCountdown(int) {
 		elapsedTime++;
 		glutTimerFunc(17, powerUpCountdown, 0);
 	}
+}
+
+void loseLife() {
+	Shape* life = lives[lives.size() - 1];
+	vector<Shape*>::iterator sceneIndex = find(scene.begin(), scene.end(), life);
+	lives.erase(lives.end() - 1);
+	scene.erase(sceneIndex);
+	glDeleteVertexArrays(1, life->getVAO());
+	glDeleteBuffers(1, life->getVerticesVBO());
+	glDeleteBuffers(1, life->getColorsVBO());
+	delete(life);
 }
 
 void removeEntityFromVector(Entity* entity, vector<Entity*>* entityVector) {
