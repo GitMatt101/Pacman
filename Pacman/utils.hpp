@@ -4,7 +4,7 @@
 #define SCREEN_HEIGHT 1080
 
 #define WIDTH 800
-#define HEIGHT 900
+#define HEIGHT 850
 
 #define SCORE_SPACE 50
 

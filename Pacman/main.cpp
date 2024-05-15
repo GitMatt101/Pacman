@@ -16,9 +16,14 @@ vector<Entity*> enemies;
 vector<Entity*> powerUps;
 
 mat4 projectionMatrix;
-
 GLuint projectionUniform;
 GLuint modelUniform;
+GLuint resolutionUniform;
+GLuint scoreSpaceUniform;
+GLuint backgroundUniform;
+GLuint primaryColorUniform;
+GLuint secondaryColorUniform;
+GLuint currentFrameUniform;
 
 TextManager* textManager;
 

@@ -23,11 +23,18 @@ extern vector<Shape*> lives;
 extern Player* player;
 extern vector<Entity*> enemies;
 extern vector<Entity*> powerUps;
+Shape* background;
 
 extern mat4 projectionMatrix;
 
 extern GLuint projectionUniform;
 extern GLuint modelUniform;
+extern GLuint resolutionUniform;
+extern GLuint scoreSpaceUniform;
+extern GLuint backgroundUniform;
+extern GLuint primaryColorUniform;
+extern GLuint secondaryColorUniform;
+extern GLuint currentFrameUniform;
 
 // Creates the level, positioning walls and enemies.
 void createLevel();
@@ -40,17 +47,30 @@ void initShaders() {
 	programID_text = createProgram((char*)VERTEX_FILE_TEXT, (char*)FRAGMENT_FILE_TEXT);
 
 	glUseProgram(programID);
+	glViewport(0, 0, WIDTH, HEIGHT);
 }
 
 void initUniforms() {
 	projectionMatrix = ortho(0.0f, (float)WIDTH, 0.0f, (float)HEIGHT);
 
-	projectionUniform = glGetUniformLocation(programID, "Projection");
-	modelUniform = glGetUniformLocation(programID, "Model");
+	projectionUniform = glGetUniformLocation(programID, "projection");
+	modelUniform = glGetUniformLocation(programID, "model");
+	backgroundUniform = glGetUniformLocation(programID, "background");
+	resolutionUniform = glGetUniformLocation(programID, "resolution");
+	scoreSpaceUniform = glGetUniformLocation(programID, "scoreSpace");
+	primaryColorUniform = glGetUniformLocation(programID, "color1");
+	secondaryColorUniform = glGetUniformLocation(programID, "color2");
+	currentFrameUniform = glGetUniformLocation(programID, "time");
 }
 
 void initGame() {
 	srand(time(NULL));
+
+	background = new Shape(createRectangle(1.0f, 1.0f, vec4(0.0f, 0.0f, 0.0f, 0.0f), vec4(0.0f, 0.0f, 0.0f, 0.0f)));
+	background->changePane();
+	background->setScale((float)WIDTH, (float)(HEIGHT - SCORE_SPACE));
+	background->setPosition((float)WIDTH / 2, (float)(HEIGHT + SCORE_SPACE) / 2);
+
 	vector<Vertex> playerVertices = createCircle(CIRCLE_RADIUS, CIRCLE_RADIUS, CIRCLE_PRECISION, vec4(1.0f, 1.0f, 0.0f, 1.0f), vec4(1.0f, 1.0f, 0.0f, 1.0f));
 	for (int i = 0; i < 47; i++)
 		playerVertices.pop_back();
@@ -65,9 +85,6 @@ void initGame() {
 	heart = new Shape(createHeart(0.05f, 0.05f, CIRCLE_PRECISION, vec4(1.0f, 0.0f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f)));
 	heart->setPosition((float)WIDTH - heart->getSize().first * 5 / 2 - 15.0f, heart->getSize().second / 2 + 10.0f);
 	lives.push_back(heart);
-
-	for (Shape* life : lives)
-		scene.push_back(life);
 }
 
 void initLevel() {
@@ -80,6 +97,8 @@ void initLevel() {
 		shape->setPosition(shape->getInitialPosition().first, shape->getInitialPosition().second);
 	}
 	scene.clear();
+	background->initVAO();
+	scene.push_back(background);
 
 	player->initVAO();
 	scene.push_back(player);

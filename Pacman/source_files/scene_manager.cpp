@@ -9,6 +9,9 @@
 
 #define POWERUP_COUNTDOWN 1500
 
+#define PRIMARY_COLOR vec3(0.0f, 0.0f, 0.0f)
+#define SECONDARY_COLOR vec3(0.2f, 0.1f, 0.2f)
+
 extern GLuint programID;
 extern GLuint programID_text;
 
@@ -22,6 +25,12 @@ extern mat4 projectionMatrix;
 
 extern GLuint projectionUniform;
 extern GLuint modelUniform;
+extern GLuint resolutionUniform;
+extern GLuint scoreSpaceUniform;
+extern GLuint backgroundUniform;
+extern GLuint primaryColorUniform;
+extern GLuint secondaryColorUniform;
+extern GLuint currentFrameUniform;
 
 extern TextManager* textManager;
 
@@ -56,6 +65,9 @@ void drawScene() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	glUniform3f(primaryColorUniform, PRIMARY_COLOR.r, PRIMARY_COLOR.g, PRIMARY_COLOR.b);
+	glUniform3f(secondaryColorUniform, SECONDARY_COLOR.r, SECONDARY_COLOR.g, SECONDARY_COLOR.b);
+
 	for (Shape* shape : scene)
 	{
 		shape->setModel(mat4(1.0));
@@ -64,6 +76,13 @@ void drawScene() {
 		shape->setModel(rotate(*shape->getModel(), radians(shape->getRotation()), vec3(0.0f, 0.0f, 1.0f)));
 		glUniformMatrix4fv(projectionUniform, 1, GL_FALSE, value_ptr(projectionMatrix));
 		glUniformMatrix4fv(modelUniform, 1, GL_FALSE, value_ptr(*shape->getModel()));
+		glUniform2f(resolutionUniform, WIDTH, HEIGHT - SCORE_SPACE);
+		glUniform1f(scoreSpaceUniform, SCORE_SPACE);
+		if (shape->isBackgroundComponent())
+			glUniform1i(backgroundUniform, 1);
+		else
+			glUniform1i(backgroundUniform, 0);
+		glUniform1f(currentFrameUniform, glutGet(GLUT_ELAPSED_TIME) / 1000.0f);
 		glBindVertexArray(*shape->getVAO());
 		glDrawArrays(GL_TRIANGLE_FAN, 0, shape->getVertices()->size());
 		glBindVertexArray(0);
