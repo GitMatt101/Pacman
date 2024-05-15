@@ -37,7 +37,7 @@ vector<Vertex> createCircle(float rx, float ry, int precision, vec4 color1, vec4
 vector<Vertex> createHeart(float rx, float ry, int precision, vec4 color1, vec4 color2);
 
 /**
-* Creates an Astroid.
+* Creates a rectangle.
 *
 * @param width - Width of the rectangle.
 * @param height - Height of the rectangle.

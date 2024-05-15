@@ -4,9 +4,10 @@
 
 extern Player* player;
 
+// Variable used to calculate the vertices angle.
 static int stepBack = 1;
 
-void widenMouth() {
+void closeMouth() {
 	float step = 2 * PI / CIRCLE_PRECISION;
 	float thetaTop = ((float)player->getVertices()->size() - 135.0f - (float)stepBack) * (-step);
 	float thetaBottom = ((float)player->getVertices()->size() - (float)stepBack) * step ;
@@ -22,7 +23,7 @@ void widenMouth() {
 	stepBack++;
 }
 
-void closeMouth() {
+void widenMouth() {
 	player->getVertices()->erase(player->getVertices()->begin() + 1);
 	player->getVertices()->pop_back();
 	stepBack--;

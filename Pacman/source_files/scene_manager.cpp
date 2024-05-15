@@ -68,8 +68,7 @@ void drawScene() {
 	glUniform3f(primaryColorUniform, PRIMARY_COLOR.r, PRIMARY_COLOR.g, PRIMARY_COLOR.b);
 	glUniform3f(secondaryColorUniform, SECONDARY_COLOR.r, SECONDARY_COLOR.g, SECONDARY_COLOR.b);
 
-	for (Shape* shape : scene)
-	{
+	for (Shape* shape : scene) {
 		shape->setModel(mat4(1.0));
 		shape->setModel(translate(*shape->getModel(), vec3(shape->getPosition().first, shape->getPosition().second, 0.0f)));
 		shape->setModel(scale(*shape->getModel(), vec3(shape->getScale().first, shape->getScale().second, 1.0f)));
@@ -89,9 +88,8 @@ void drawScene() {
 	}
 	if (!player->isAlive())
 		textManager->renderText(projectionMatrix, "GAME OVER", (float)WIDTH / 2 - 145.0f, (float)HEIGHT / 2, 1.0f, vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	else if (enemies.size() == 0) {
+	else if (enemies.size() == 0)
 		textManager->renderText(projectionMatrix, "YOU WIN", (float)WIDTH / 2 - 100.0f, (float)HEIGHT / 2, 1.0f, vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	}
 	glutSwapBuffers();
 	glUseProgram(programID);
 }
@@ -159,12 +157,12 @@ void updateAnimations(int) {
 	switch (player->getMouthState()) {
 		case OPENING:
 			widenMouth();
-			if (player->getVertices()->size() >= 180 + 2)	//TODO: create definition in utils
+			if (player->getVertices()->size() <= 135 + 2)
 				player->setMouthState(CLOSING);
 			break;
 		case CLOSING:
 			closeMouth();
-			if (player->getVertices()->size() <= 135 + 2)	//TODO: create definition in utils
+			if (player->getVertices()->size() >= 180 + 2)
 				player->setMouthState(OPENING);
 			break;
 		default:

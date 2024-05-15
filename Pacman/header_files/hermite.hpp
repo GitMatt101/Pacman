@@ -15,4 +15,12 @@ float DX(int i, vector<float> t, vector<vec3> derivativeControlPoints, vector<ve
 
 float DY(int i, vector<float> t, vector<vec3> derivativeControlPoints, vector<vec3> polygonalControlPoints);
 
+/**
+* Creates a Hermite curve.
+* 
+* @param controlPoints - Coordinates of the control points.
+* @param color1 - Primary color.
+* @param color2 - Secondary color.
+* @return A vector of vertices that form a Hermite curve.
+*/
 vector<Vertex> buildCurve(vector<vec3> controlPoints, vec4 color1, vec4 color2);
