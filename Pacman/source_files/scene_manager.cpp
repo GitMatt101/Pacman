@@ -89,12 +89,15 @@ void drawScene() {
 	}
 	if (!player->isAlive())
 		textManager->renderText(projectionMatrix, "GAME OVER", (float)WIDTH / 2 - 145.0f, (float)HEIGHT / 2, 1.0f, vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	else if (enemies.size() == 0) {
+		textManager->renderText(projectionMatrix, "YOU WIN", (float)WIDTH / 2 - 100.0f, (float)HEIGHT / 2, 1.0f, vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	}
 	glutSwapBuffers();
 	glUseProgram(programID);
 }
 
 void updateShapes(int) {
-	if (player->isAlive()) {
+	if (player->isAlive() && enemies.size() > 0) {
 		moveEntity(player);
 		for (Entity* enemy : enemies) {
 			if (enemy->isAlive())
